@@ -1,0 +1,71 @@
+import React, {  useState } from 'react'
+import { Link } from 'react-router-dom'
+
+const Login = () =>{
+    const[username, setUsername] = useState('');
+    const[password, setPassword] = useState('');
+
+    const[values,setValues] = useState({
+        name:'',
+        password:''
+    })
+
+    const proceedLogin = (e) =>{
+        e.preventDefault();
+        // if(validate()){
+
+        // }
+    }
+
+    const validate = (values) =>{
+    let errors = {}
+    if(!values.name){
+       errors.name = {}
+       if(!values.name){
+        errors.name = "Name Required"
+       }
+       else if(values.name.length < 5){
+        errors.name = "Name must be morethan  characters"
+       }
+
+     }
+     if(!values.password){
+        errors.password = "Name Required"
+       }
+       else if(values.password.length < 5){
+        errors.password = "Name must be morethan  characters"
+       }
+  return errors;
+    }
+    return(
+        <div className='row'>
+           <div className='offset-lg-3 col-lg-6' style={{marginTop:'100px'}}>
+            <form onSubmit={proceedLogin} className='container'>
+                <div className='card' style={{width: '41rem'}}>
+                    <div className='card-header'>
+                        <h2>User Login</h2>
+                    </div>
+                    <div className='card-body'>
+                        <div className='form-group'>
+                            <label style={{display:'flex',fontWeight:'700'}}>User Name<span className='errMsg'>*</span></label>
+                            <input type="text" value={username}name="name" onChange = { e => setUsername(e.target.value)} className='form-control'></input>
+                        </div>
+                        <div className='form-group'>
+                            <label style={{display:'flex',fontWeight:'700'}}>Password<span className='errMsg'>*</span></label>
+                            <input type="text" value ={password} name="password" onChange = { e => setPassword(e.target.value)} className='form-control'></input>
+                        </div>
+                    </div>
+                </div>
+                <div className='card-footer'style={{marginTop: '22px'}} >
+                 <button type='submit' className='btn btn-primary' >Login</button>
+                 <Link className='btn btn-success' to={'/register'} >New User</Link>
+                </div>
+
+            </form>
+           </div>
+            
+        </div>
+    )
+}
+
+export default Login

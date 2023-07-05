@@ -1,0 +1,26 @@
+{
+  "user": [
+    {
+      "uname": "gayathri",
+      "name": "chedella",
+      "password": "234567",
+      "email": "sam@gmail/com",
+      "phone": "",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": "NeMQWio"
+    },
+    {
+      "uname": "roshini",
+      "name": "bondi",
+      "password": "123456",
+      "email": "test@gmail.com",
+      "phone": "5555555555555",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": "BqC9_Kj"
+    }
+  ]
+}

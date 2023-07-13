@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validation from "./Loginvalidation/validation";
-import { Toast } from "bootstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
-  // const[username, setUsername] = useState('');
-  // const[password, setPassword] = useState('');
-
   const [values, setValues] = useState({
     name: "",
     password: "",
@@ -19,29 +16,14 @@ const Login = () => {
   async function proceedLogin(e) {
     e.preventDefault();
     setError(validation(values));
-    // fetch("http://localhost:8000/user")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     data
-    //       .find(
-    //         (items) =>
-    //           items.uname === values.name && items.password === values.password
-    //       )
-    //       .then((value) => {
-    //         if (value) navigate("/home");
-    //       });
-
-    //     //console.log(data[0]);
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Login failed Enter valid Details");
-    //     console.log(error);
-    //   });
+    console.log(values);
     const response = await fetch("http://localhost:8000/user");
     const userDetails = await response.json();
+    console.log(userDetails);
     const validUser = await userDetails.find(
       (user) => user.uname === values.name && user.password === values.password
     );
+    sessionStorage.setItem("userId", validUser.id);
     if (validUser) {
       navigate("/home");
       toast.success("success");
@@ -63,11 +45,33 @@ const Login = () => {
     <div className="row">
       <div className="offset-lg-3 col-lg-6" style={{ marginTop: "100px" }}>
         <form onSubmit={proceedLogin} className="container">
-          <div className="card" style={{ width: "41rem" }}>
-            <div className="card-header">
-              <h2>User Login</h2>
+          <div
+            className="card"
+            style={{
+              width: "41rem",
+              borderWidth: "thick",
+              backgroundColor: "honeydew",
+            }}
+          >
+            <div
+              className="card-header"
+              style={{ backgroundColor: "honeydew" }}
+            >
+              <h2 style={{ color: "chocolate" }}>
+                <span style={{ fontSize: "2rem", paddingRight: "5px" }}>
+                  <i
+                    class="fas fa-user-circle"
+                    style={{
+                      paddingRight: "3px",
+                      display: "contents",
+                      color: "white;",
+                    }}
+                  ></i>
+                </span>
+                User Login
+              </h2>
             </div>
-            <div className="card-body">
+            <div className="card-body" style={{ backgroundColor: "honeydew" }}>
               <div className="form-group">
                 <label style={{ display: "flex", fontWeight: "700" }}>
                   User Name<span className="errMsg">*</span>
@@ -78,6 +82,7 @@ const Login = () => {
                   name="name"
                   onChange={handleChange}
                   className="form-control"
+                  style={{ border: errors.name ? "1px solid red" : null }}
                 ></input>
                 {errors.name && (
                   <p
@@ -101,6 +106,7 @@ const Login = () => {
                   value={values.password}
                   name="password"
                   onChange={handleChange}
+                  style={{ border: errors.password ? "1px solid red" : null }}
                   className="form-control"
                 ></input>
                 {errors.password && (

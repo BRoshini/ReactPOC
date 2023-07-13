@@ -2,25 +2,46 @@
   "user": [
     {
       "uname": "gayathri",
-      "name": "chedella",
-      "password": "234567",
-      "email": "sam@gmail/com",
+      "name": "hh",
+      "password": "098765",
+      "email": "ddddddd@ddd.ddddd",
       "phone": "",
       "country": "india",
       "address": "",
       "gender": "male",
-      "id": "NeMQWio"
+      "id": 1
+    }
+  ],
+  "comments": [
+    {
+      "commentTxt": "hhhhhhiiiiiiiiiiiiiiiiiooooooooooooooooo",
+      "id": 1
     },
     {
-      "uname": "roshini",
-      "name": "bondi",
-      "password": "123456",
-      "email": "test@gmail.com",
-      "phone": "5555555555555",
-      "country": "india",
-      "address": "",
-      "gender": "male",
-      "id": "BqC9_Kj"
+      "commentTxt": "hhhhhhhhhhhhhhhhhhhhooooooooooooooooooohhhhhhhhhh",
+      "id": 2
+    },
+    {
+      "commentTxt": "fdsgfdgdfgf",
+      "id": 3
+    }
+  ],
+  "articlecreate": [
+    {
+      "title": "sample text data of the project",
+      "description": "hhhhhhhhhhhhhhhhhhhhhhhhh",
+      "selected": "",
+      "name": "",
+      "id": 1,
+      "likes": 0
+    },
+    {
+      "title": "sample text data of the project",
+      "description": "yruuuuuuuuhuj",
+      "selected": "",
+      "name": "",
+      "id": 2,
+      "likes": 0
     }
   ]
 }

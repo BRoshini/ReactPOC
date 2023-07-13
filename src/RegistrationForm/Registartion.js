@@ -85,11 +85,11 @@ const Registration = () => {
     <div>
       <div className="offset-lg-3 col-lg-6">
         <form className="container" onSubmit={handleSubmit}>
-          <div className="card">
-            <div className="card-header">
+          <div className="card" style={{ marginTop: "71px" }}>
+            <div className="card-header" style={{ backgroundColor: "beige" }}>
               <h1> User Registration</h1>
             </div>
-            <div className="card-body">
+            <div className="card-body" style={{ backgroundColor: "beige" }}>
               <div className="row">
                 <div className="col-lg-6">
                   <div className="form-group">
@@ -152,6 +152,7 @@ const Registration = () => {
                     <input
                       className="form-control"
                       type="number"
+                      maxlength="10"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     ></input>
@@ -186,7 +187,7 @@ const Registration = () => {
                     ></input>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-2">
                   <div className="form-group">
                     <label style={{ display: "flex" }}>
                       <b>Gender </b>

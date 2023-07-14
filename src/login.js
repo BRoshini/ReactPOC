@@ -17,13 +17,16 @@ const Login = () => {
     e.preventDefault();
     setError(validation(values));
     console.log(values);
+
     const response = await fetch("http://localhost:8000/user");
     const userDetails = await response.json();
     console.log(userDetails);
     const validUser = await userDetails.find(
       (user) => user.uname === values.name && user.password === values.password
     );
-    sessionStorage.setItem("userId", validUser.id);
+    if (validUser) {
+      sessionStorage.setItem("userId", validUser.id);
+    }
     if (validUser) {
       navigate("/home");
       toast.success("success");

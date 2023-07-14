@@ -16,36 +16,27 @@ const Articleview = () => {
       .then((response) => {
         console.log(response.data);
         setData(response.data);
+        setArticle_id(response.data.id);
         setCount(response.data.likes);
-        setImageURL(response.data.name);
+        // setImageURL(response.data.name);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
-  // const fetchData = () => {
-  //   axios
-  //     .get(`http://localhost:8000/comments/${params?.id}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       //setMessage(response.data.commentMessage);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
-  // fetchData();
 
   const incrementCount = () => {
-    setCount(count + 1);
-    console.log(setCount(count + 1));
+    setCount(count.likes + 1);
+    console.log(setCount(data.likes + 1));
   };
 
   const [modal, setModal] = useState(false);
   const [commentTxt, setCommentTxt] = useState("");
   const [id, setId] = useState(0);
+  const [article_id, setArticle_id] = useState(0);
   let commentsObject = {
     commentTxt,
+    article_id,
     id,
   };
   const handleClick = (e) => {
@@ -54,7 +45,7 @@ const Articleview = () => {
     console.log("submitted value", commentTxt);
 
     // useEffect(() => {
-    fetch("http://localhost:8000/comments", {
+    fetch(`http://localhost:8000/comments/${params?.id}`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(commentsObject),
@@ -105,10 +96,18 @@ const Articleview = () => {
             </div>
             <div class="col-sm-9">
               <div class="card" style={{ borderColor: "aliceblue" }}>
-                <div class="card-body">
+                <div
+                  class="card-body"
+                  style={{ fontFamily: "fangsong", color: "mediumvioletred" }}
+                >
                   <h1 class="card-title">{data.title}</h1>
-                  <p class="card-text">{data.description}</p>
-                  <p class="card-text">{message}</p>
+                  <p
+                    class="card-text"
+                    style={{ fontSize: "31px", color: "currentColor" }}
+                  >
+                    {data.description}
+                  </p>
+                  {/* <p class="card-text">{data.likes}</p> */}
                   <p class="card-text">{commentTxt}</p>
                 </div>
               </div>

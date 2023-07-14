@@ -1,47 +1,346 @@
 {
   "user": [
     {
-      "uname": "gayathri",
-      "name": "hh",
-      "password": "098765",
-      "email": "ddddddd@ddd.ddddd",
+      "uname": "roshini",
+      "name": "bondi",
+      "password": "123456",
+      "email": "dd@ddd.ddd",
       "phone": "",
       "country": "india",
       "address": "",
       "gender": "male",
       "id": 1
+    },
+    {
+      "id": 2,
+      "articles": [
+        {
+          "title": "sample text data of the project",
+          "description": "hgjjjkkkkkkkk",
+          "selected": "",
+          "name": "",
+          "likes": 0,
+          "userId": "1"
+        }
+      ]
+    },
+    {
+      "uname": "haloms",
+      "name": "hhh",
+      "password": "123456",
+      "email": "yyyyyy@ggggggg",
+      "phone": "",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": 3
+    },
+    {
+      "uname": "halooms",
+      "name": "bondi",
+      "password": "123456",
+      "email": "hhhhhhhhhhh@rrrrrrr.jjj",
+      "phone": "",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": 4
+    },
+    {
+      "id": 5,
+      "articles": [
+        {
+          "title": "sample text data of the project",
+          "description": "halo-oms",
+          "selected": "",
+          "name": "",
+          "likes": 0,
+          "userId": "4"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "articles": [
+        {
+          "title": "sample text data of the project",
+          "description": "hjjjjjjjjj",
+          "selected": "",
+          "name": "",
+          "likes": 0,
+          "userId": "4"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "articles": [
+        {
+          "title": "sample text data of the project",
+          "description": "dddddddddd",
+          "selected": "",
+          "name": "",
+          "likes": 0,
+          "userId": "4"
+        }
+      ]
+    },
+    {
+      "uname": "preethi",
+      "name": "surada",
+      "password": "123456",
+      "email": "test@gmail.com",
+      "phone": "",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": 8
+    },
+    {
+      "uname": "testing",
+      "name": "roshini",
+      "password": "123456",
+      "email": "test@gmail.com",
+      "phone": "",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": 9
+    },
+    {
+      "uname": "induss",
+      "name": "rest",
+      "password": "123456",
+      "email": "ss@dd.ddd",
+      "phone": "",
+      "country": "india",
+      "address": "",
+      "gender": "male",
+      "id": 10
     }
   ],
   "comments": [
     {
-      "commentTxt": "hhhhhhiiiiiiiiiiiiiiiiiooooooooooooooooo",
+      "commentTxt": "sample text",
       "id": 1
     },
     {
-      "commentTxt": "hhhhhhhhhhhhhhhhhhhhooooooooooooooooooohhhhhhhhhh",
+      "commentTxt": "tijihsdfd",
       "id": 2
     },
     {
-      "commentTxt": "fdsgfdgdfgf",
+      "commentTxt": "wsdfgvfdg",
       "id": 3
+    },
+    {
+      "commentTxt": "hggggggggggggg",
+      "id": 4
+    },
+    {
+      "commentTxt": "testinggg",
+      "id": 5
+    },
+    {
+      "commentTxt": "sample text",
+      "id": 6
+    },
+    {
+      "commentTxt": "d",
+      "article_id": 0,
+      "id": 7
+    },
+    {
+      "commentTxt": "dhhhhhhhhhhh",
+      "article_id": 0,
+      "id": 8
+    },
+    {
+      "commentTxt": "yt",
+      "article_id": 1,
+      "id": 9
+    },
+    {
+      "commentTxt": "sample comment text",
+      "article_id": 8,
+      "id": 10
+    },
+    {
+      "commentTxt": "article3",
+      "id": 11
+    },
+    {
+      "commentTxt": "sample test",
+      "id": 12
+    },
+    {
+      "commentTxt": "yt1",
+      "id": 13
+    },
+    {
+      "commentTxt": "hiii",
+      "article_id": 11,
+      "id": 14
+    },
+    {
+      "commentTxt": "hiii",
+      "article_id": 11,
+      "id": 15
+    },
+    {
+      "commentTxt": "hiii",
+      "article_id": 11,
+      "id": 16
+    },
+    {
+      "commentTxt": "hiii",
+      "article_id": 11,
+      "id": 17
+    },
+    {
+      "commentTxt": "samplee",
+      "article_id": 12,
+      "id": 18
     }
   ],
   "articlecreate": [
     {
       "title": "sample text data of the project",
-      "description": "hhhhhhhhhhhhhhhhhhhhhhhhh",
+      "description": "testing data ",
       "selected": "",
       "name": "",
+      "userId": 1,
       "id": 1,
       "likes": 0
     },
     {
       "title": "sample text data of the project",
-      "description": "yruuuuuuuuhuj",
+      "description": "hghjsssssss",
       "selected": "",
       "name": "",
+      "userId": 1,
       "id": 2,
       "likes": 0
+    },
+    {
+      "title": "sample text data of the project",
+      "description": "hghjsssssss",
+      "selected": "",
+      "name": "",
+      "userId": 2,
+      "id": 2,
+      "likes": 0
+    },
+    {
+      "id": 3,
+      "articles": [
+        {
+          "title": "sample text data of the project",
+          "description": "ddddddddddd",
+          "selected": "",
+          "name": "",
+          "likes": 0,
+          "userId": "4"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "sample text data of the project",
+      "description": "dddddddddddddd",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "4"
+    },
+    {
+      "id": 5,
+      "title": "hbjhbsdas",
+      "description": "sfsdfdsfds",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "4"
+    },
+    {
+      "id": 6,
+      "title": "article2",
+      "description": "desc2",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "4"
+    },
+    {
+      "id": 7,
+      "title": "articles sample",
+      "description": "hyderahv ",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "4"
+    },
+    {
+      "id": 8,
+      "title": "sample article",
+      "description": "datatdescriptiomn",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "8"
+    },
+    {
+      "id": 9,
+      "title": "sample text data of the project",
+      "description": "test",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "8"
+    },
+    {
+      "id": 10,
+      "title": "sample text data of the project",
+      "description": "testt",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "9"
+    },
+    {
+      "id": 11,
+      "title": "sample text data of the project",
+      "description": "test",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "10"
+    },
+    {
+      "id": 12,
+      "title": "sample text data of the project",
+      "description": "test description",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "10"
+    },
+    {
+      "id": 13,
+      "title": "testing article",
+      "description": "description",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "10"
+    },
+    {
+      "id": 14,
+      "title": "title123",
+      "description": "test123",
+      "selected": "",
+      "name": "",
+      "likes": 0,
+      "userId": "10"
     }
   ]
 }

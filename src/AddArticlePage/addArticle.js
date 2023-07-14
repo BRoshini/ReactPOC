@@ -41,19 +41,20 @@ const Addartcile = (props) => {
   };
 
   const [likes, setLikes] = useState("");
-
+  const userId = sessionStorage.getItem("userId");
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title.length === 0 || description.length === 0) {
       setError(true);
     }
     let articleObj = {
+      id,
       title,
       description,
       selected,
       name,
-      id,
       likes: 0,
+      userId,
     };
     if (title && description) {
       fetch("http://localhost:8000/articlecreate", {

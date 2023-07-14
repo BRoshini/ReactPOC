@@ -29,24 +29,6 @@ const Registration = () => {
       }
     });
 
-    // console.log(errorMessage);
-
-    // if (name === null || name === "") {
-    //   isProceed = false;
-    //   errorMessage += " Username ";
-    // }
-    // if (uname === null || uname === "") {
-    //   isProceed = false;
-    //   errorMessage += " Fullname ";
-    // }
-    // if (uname === null || uname === "") {
-    //   isProceed = false;
-    //   errorMessage += " Password ";
-    // }
-    // if (uname === null || uname === "") {
-    //   isProceed = false;
-    //   errorMessage += " Email ";
-    // }
     if (!isProceed) {
       toast.warning(errorMessage);
     }

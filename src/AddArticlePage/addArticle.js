@@ -9,39 +9,44 @@ const Addartcile = (props) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("");
   const [name, setName] = useState("");
+  const [imageContent, setImageContent] = useState("");
   const handleChange = (event) => {
     event.preventDefault();
     setSelected(event.target.files[0]);
     setName(event.target.files[0].name);
     console.log(event.target.files[0]);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      setImageContent(base64String);
+    };
+    reader.readAsDataURL(event.target.files[0]);
   };
 
-  const [commentMesage, setCommentMessage] = useState("");
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [description, setDescription] = useState("");
   const [id, setId] = useState(0);
+  const [videoFile, setVideoFile] = useState("");
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const [likes, setLikes] = useState(0);
+  const userId = sessionStorage.getItem("userId");
+  const handleFileChange = (event) => {
+    setVideoFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+    const file = event.target.files[0];
 
-    const url = "http://localhost:8000/user";
-    const formData = new FormData();
-
-    formData.append("image", selected, name);
-    //console.log(formData);
-    axios
-      .post(url, formData)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setVideoFile(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const [likes, setLikes] = useState("");
-  const userId = sessionStorage.getItem("userId");
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title.length === 0 || description.length === 0) {
@@ -53,8 +58,10 @@ const Addartcile = (props) => {
       description,
       selected,
       name,
-      likes: 0,
+      likes,
       userId,
+      imageContent,
+      videoFile,
     };
     if (title && description) {
       fetch("http://localhost:8000/articlecreate", {
@@ -72,13 +79,6 @@ const Addartcile = (props) => {
         .catch((err) => {
           toast.error("Failed :" + err.message);
         });
-      //     axios.get('http://localhost:8000/user')
-      // .then((response) => {
-      //   return axios.get(...); // using response.data
-      // })
-      // .then((response) => {
-      //   console.log('Response', response);
-      // });
     }
   };
 
@@ -86,13 +86,20 @@ const Addartcile = (props) => {
     <div>
       <div
         class="container"
-        style={{ backgroundColor: " beige", marginTop: "81px" }}
+        style={{
+          backgroundColor: " beige",
+          marginTop: "81px",
+          marginBottom: "64px",
+        }}
       >
         <div className="offset-lg-3 col-lg-6">
           <form className="container" onSubmit={handleSubmit}>
             <div className="card-body">
               <div className="card-header">
-                <h3> Upload Article</h3>
+                <h3 style={{ color: "blue", paddingTop: "37px" }}>
+                  {" "}
+                  Upload Article
+                </h3>
               </div>
               <div className="row">
                 <div className="col-lg-12" style={{ marginTop: "54px" }}>
@@ -171,15 +178,39 @@ const Addartcile = (props) => {
                         display: "flex",
                         fontSize: "27px",
                         color: "blue",
+                        marginBottom: "-22px",
                       }}
                     >
                       <b>Images: </b>
                     </label>
-                    <input type="file" onChange={handleChange} />
-                    <button type="submit" onClick={handleFormSubmit}>
-                      upload
-                    </button>
+                    <input
+                      type="file"
+                      style={{ paddingRight: "91px" }}
+                      onChange={handleChange}
+                    />
+
                     <br />
+                    <div className="col-lg-12" style={{ marginTop: "24px" }}>
+                      <label
+                        style={{
+                          display: "flex",
+                          fontSize: "27px",
+                          color: "blue",
+                          marginBottom: "-22px",
+                          paddingRight: "91px",
+                        }}
+                      >
+                        <b>Videos: </b>
+                      </label>
+                      <div>
+                        <input
+                          type="file"
+                          accept="video/*"
+                          onChange={handleFileChange}
+                          style={{ paddingRight: "91px" }}
+                        />
+                      </div>
+                    </div>
                     <div className="card-footer" style={{ marginTop: "68px" }}>
                       <button
                         style={{ marginBottom: "14px" }}

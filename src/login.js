@@ -28,7 +28,7 @@ const Login = () => {
       sessionStorage.setItem("userId", validUser.id);
     }
     if (validUser) {
-      navigate("/home");
+      navigate("/articlehomepage");
       toast.success("success");
     } else {
       toast.error("Login failed Enter valid Details");

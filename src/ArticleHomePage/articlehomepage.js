@@ -30,7 +30,7 @@ const Articlehomepage = () => {
       .get(`http://localhost:8000/comments`)
       .then((response) => {
         console.log(response.data);
-        setCommentTxt(response.data);
+        setCommentTxts(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -42,17 +42,17 @@ const Articlehomepage = () => {
   };
 
   const [modal, setModal] = useState(false);
-  const [commentTxt, setCommentTxt] = useState([]);
+  const [commentTxts, setCommentTxts] = useState([]);
   const [id, setId] = useState(0);
   const navigate = useNavigate();
   let commentsObject = {
-    commentTxt,
+    commentTxts,
     id,
   };
   const handleClick = (e) => {
     e.preventDefault();
     setModal(false);
-    console.log("submitted value", commentTxt);
+    console.log("submitted value", commentTxts);
 
     // useEffect(() => {
     fetch("http://localhost:8000/comments", {
@@ -85,7 +85,7 @@ const Articlehomepage = () => {
                 className="card"
                 style={{
                   marginTop: "112px",
-                  borderWidth: "thick",
+                  borderWidth: "8px",
                   borderColor: "cornflowerblue",
                   paddingLeft: "140px",
                   marginRight: "233px",
@@ -102,19 +102,17 @@ const Articlehomepage = () => {
                           color: "mediumvioletred",
                         }}
                       >
-                        <h2 class="card-title">{x.title}</h2>
-                        <p
-                          class="card-text"
-                          style={{ fontSize: "31px", color: "currentColor" }}
-                        >
+                        <h2 class="card-title" style={{ color: "deeppink" }}>
+                          {x.title}
+                        </h2>
+                        <p class="card-text" style={{ color: "deeppink" }}>
                           {x.description}
                         </p>
-                        {/* <p class="card-text">{commentTxt}</p> */}
-                        {/* {commentTxt.map((item) => {
-                          if (item.article_id === x.id) {
-                            return <p class="card-text">{item.commentTxt}</p>;
-                          }
-                        })} */}
+                        {commentTxts.map((data) => {
+                          <p class="card-text" style={{ color: "deeppink" }}>
+                            {data.commentTxt}
+                          </p>;
+                        })}
                       </div>
                     </div>
                   </div>

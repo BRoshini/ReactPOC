@@ -13,7 +13,9 @@ const Articleview = () => {
   const [count, setCount] = useState(0);
   const [ImageContent, setImageContent] = useState("");
   const [base64Data, setBase64Data] = useState("");
+  const [likes, setLikes] = useState(0);
   const userId = sessionStorage.getItem("userId");
+  // const [likesVal,setLikesVal] = useState
   useEffect(() => {
     axios
       .get(`http://localhost:8000/articlecreate/${params?.id}`)
@@ -21,7 +23,7 @@ const Articleview = () => {
         console.log(response.data);
         setData(response.data);
         setArticle_id(response.data.id);
-        setCount(response.data.likes);
+        //setCount(response.data.likes);
         setImageContent(response.data.imageContent);
         setBase64Data(response.data.videoFile);
       })
@@ -30,9 +32,9 @@ const Articleview = () => {
       });
   }, []);
 
-  console.log(count);
   const incrementCount = () => {
-    setCount(count + 1);
+    setCount(1);
+    // console.log(data.likes + 1);
   };
 
   const [modal, setModal] = useState(false);
@@ -44,6 +46,8 @@ const Articleview = () => {
     commentTxt,
     article_id,
     id,
+    likes,
+    count,
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -61,6 +65,7 @@ const Articleview = () => {
       .then((data) => {
         console.log(data);
         setInputCommentText(data.commentTxt);
+        setCount(1);
       })
       .catch((err) => {
         console.log(err);
@@ -95,145 +100,331 @@ const Articleview = () => {
           <div class="col-lg-12">
             <div class="card-header">
               <label style={{ fontWeight: "700" }}>
-                <h1>Title:</h1>
-                <span>
-                  <p>{data.title}</p>
-                </span>
+                <h3>Title: &nbsp;</h3>
               </label>
+              {data.title}
+
+              {/* <label style={{ fontWeight: "700" }}>
+                <h3>Title: &nbsp;</h3>
+              </label>
+              {data.title} */}
             </div>
             <div class="card-body">
-              {/* <h5 class="card-title"> */}
-              <button
-                onClick={incrementCount}
-                style={{
-                  paddingLeft: "38px",
-                  marginTop: "15px",
-                  paddingRight: "11px",
-                  backgroundColor: "deepskyblue",
-                  float: "left",
-                  marginTop: "2px",
-                }}
-              >
-                <span style={{ fontSize: "2rem", color: "floralwhite" }}>
-                  <i
-                    class="fas fa-thumbs-up"
-                    style={{
-                      paddingRight: "3px",
-                      display: "contents",
-                      color: "white;",
-                    }}
-                  ></i>
-                </span>
-                &nbsp;{count}
-              </button>
-              <div className="col-lg-11">
-                {" "}
-                <h3>Description:</h3>
-                {data.description}
-              </div>
-
-              <div>
+              {/* <h5 class="card-title">
                 <button
-                  onClick={() => setModal(true)}
+                  onClick={incrementCount}
                   style={{
                     paddingLeft: "38px",
-                    // marginTop: "15px",
+                    marginTop: "15px",
                     paddingRight: "11px",
                     backgroundColor: "deepskyblue",
-                    float: "right",
+                    float: "left",
                     marginTop: "2px",
                   }}
                 >
                   <span style={{ fontSize: "2rem", color: "floralwhite" }}>
                     <i
-                      class="fas fa-comment-alt"
+                      class="fas fa-thumbs-up"
                       style={{
                         paddingRight: "3px",
                         display: "contents",
                         color: "white;",
                       }}
                     ></i>
+                  </span>
+                  &nbsp;{count}
+                </button>
+                <div className="col-lg-11">
+                  {" "}
+                  <h3>Description:</h3>
+                  {data.description}
+                </div>
 
-                    <div>
-                      <Modal
-                        size="lg"
-                        isOpen={modal}
-                        toggle={() => setModal(!modal)}
-                      >
-                        <ModalHeader toggle={() => setModal(!modal)}>
-                          Comment Message for Article
-                        </ModalHeader>
-                        <ModalBody>
-                          <form>
-                            <Row>
-                              <Col lg={12}>
-                                <div className="row">
-                                  <div className="col-lg-12">
-                                    <div className="form-group">
-                                      <label
+                <div>
+                  <button
+                    onClick={() => setModal(true)}
+                    style={{
+                      paddingLeft: "38px",
+                      // marginTop: "15px",
+                      paddingRight: "11px",
+                      backgroundColor: "deepskyblue",
+                      float: "right",
+                      marginTop: "2px",
+                    }}
+                  >
+                    <span style={{ fontSize: "2rem", color: "floralwhite" }}>
+                      <i
+                        class="fas fa-comment-alt"
+                        style={{
+                          paddingRight: "3px",
+                          display: "contents",
+                          color: "white;",
+                        }}
+                      ></i>
+
+                      <div>
+                        <Modal
+                          size="lg"
+                          isOpen={modal}
+                          toggle={() => setModal(!modal)}
+                        >
+                          <ModalHeader toggle={() => setModal(!modal)}>
+                            Comment Message for Article
+                          </ModalHeader>
+                          <ModalBody>
+                            <form>
+                              <Row>
+                                <Col lg={12}>
+                                  <div className="row">
+                                    <div className="col-lg-12">
+                                      <div className="form-group">
+                                        <label
+                                          style={{
+                                            display: "flex",
+                                            fontSize: "27px",
+                                            color: "blue",
+                                          }}
+                                        >
+                                          <b>Comment Message: </b>
+                                        </label>
+                                        <textarea
+                                          value={inputCommentText}
+                                          // value={message.map((item) => {
+                                          //   {
+                                          //     item.commentTxt;
+                                          //   }
+                                          // })}
+                                          // value={message.map((data) => {
+                                          //   return data.commentTxt;
+                                          // })}
+                                          id="id"
+                                          onChange={(e) => {
+                                            setInputCommentText(e.target.value);
+                                            setCommentTxt(e.target.value);
+                                          }}
+                                          style={{
+                                            borderWidth: "thin",
+                                            borderRadius: "10px",
+                                          }}
+                                          rows="5"
+                                          cols="100"
+                                          placeholder="Enter your description"
+                                        ></textarea>
+                                      </div>
+                                    </div>
+                                    <div className="card-footer">
+                                      <button
+                                        onClick={handleClick}
                                         style={{
-                                          display: "flex",
-                                          fontSize: "27px",
-                                          color: "blue",
+                                          marginBottom: "14px",
+                                          marginLeft: "364px",
+                                          marginTop: "28px",
                                         }}
+                                        className="btn btn-success btn-lg"
                                       >
-                                        <b>Comment Message: </b>
-                                      </label>
-                                      <textarea
-                                        value={inputCommentText}
-                                        // value={message.map((item) => {
-                                        //   {
-                                        //     item.commentTxt;
-                                        //   }
-                                        // })}
-                                        id="id"
-                                        onChange={(e) => {
-                                          setInputCommentText(e.target.value);
-                                          setCommentTxt(e.target.value);
-                                        }}
-                                        style={{
-                                          borderWidth: "thin",
-                                          borderRadius: "10px",
-                                        }}
-                                        rows="5"
-                                        cols="100"
-                                        placeholder="Enter your description"
-                                      ></textarea>
+                                        Submit
+                                      </button>
                                     </div>
                                   </div>
-                                  <div className="card-footer">
-                                    <button
-                                      onClick={handleClick}
-                                      style={{
-                                        marginBottom: "14px",
-                                        marginLeft: "364px",
-                                        marginTop: "28px",
-                                      }}
-                                      className="btn btn-success btn-lg"
-                                    >
-                                      Submit
-                                    </button>
-                                  </div>
-                                </div>
-                              </Col>
-                            </Row>
-                          </form>
-                        </ModalBody>
-                      </Modal>
-                    </div>
-                  </span>
-                </button>
-              </div>
-              {/* </h5> */}
+                                </Col>
+                              </Row>
+                            </form>
+                          </ModalBody>
+                        </Modal>
+                      </div>
+                    </span>
+                  </button>
+                </div>
+              </h5>
               <p class="card-text">{commentTxt}</p>
               <div className="row">
                 <p class="card-text" style={{ paddingRight: "2px" }}>
                   &nbsp; Article created by :&nbsp;{item.uname}
                 </p>
+              </div> */}
+
+              <div class="conatiner-fluid p-0">
+                <div class="row">
+                  <div class="col-1" style={{ color: "white" }}>
+                    <button
+                      onClick={incrementCount}
+                      style={{
+                        paddingLeft: "38px",
+                        marginTop: "15px",
+                        paddingRight: "11px",
+                        backgroundColor: "deepskyblue",
+                        float: "left",
+                        marginTop: "2px",
+                      }}
+                    >
+                      <span style={{ fontSize: "2rem", color: "floralwhite" }}>
+                        <i
+                          class="fas fa-thumbs-up"
+                          style={{
+                            paddingRight: "3px",
+                            display: "contents",
+                            color: "white;",
+                          }}
+                        ></i>
+                      </span>
+                      &nbsp;{count}
+                      {/* {message
+                        ? message.filter(
+                            (items) => items.article_id === data.id
+                          ).length
+                        : ""} */}
+                    </button>
+                  </div>
+                  <div class="col-10">
+                    <label style={{ fontWeight: "700" }}>
+                      <h3>Description: &nbsp;</h3>
+                    </label>
+                    {data.description}
+                    <div className="row">
+                      {commentTxt ? (
+                        <label style={{ fontWeight: "700" }}>
+                          <h3>Comment message: &nbsp; </h3>
+                          {commentTxt}
+                        </label>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="row">
+                      <label style={{ fontWeight: "700" }}>
+                        <h3>Article created by: &nbsp;</h3>
+                        {item.uname}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-1">
+                    <label style={{ fontWeight: "700" }}>
+                      <button
+                        onClick={() => setModal(true)}
+                        style={{
+                          paddingLeft: "38px",
+                          // marginTop: "15px",
+                          paddingRight: "11px",
+                          backgroundColor: "deepskyblue",
+                          float: "right",
+                          marginTop: "2px",
+                        }}
+                      >
+                        <span
+                          style={{ fontSize: "2rem", color: "floralwhite" }}
+                        >
+                          <i
+                            class="fas fa-comment-alt"
+                            style={{
+                              paddingRight: "3px",
+                              display: "contents",
+                              color: "white;",
+                            }}
+                          ></i>
+
+                          <div>
+                            <Modal
+                              size="lg"
+                              isOpen={modal}
+                              toggle={() => setModal(!modal)}
+                            >
+                              <ModalHeader toggle={() => setModal(!modal)}>
+                                Comment Message for Article
+                              </ModalHeader>
+                              <ModalBody>
+                                <form>
+                                  <Row>
+                                    <Col lg={12}>
+                                      <div className="row">
+                                        <div className="col-lg-12">
+                                          <div className="form-group">
+                                            <label
+                                              style={{
+                                                display: "flex",
+                                                fontSize: "27px",
+                                                color: "blue",
+                                              }}
+                                            >
+                                              <b>Comment Message: </b>
+                                            </label>
+                                            <textarea
+                                              value={inputCommentText}
+                                              // value={message.map((item) => {
+                                              //   {
+                                              //     item.commentTxt;
+                                              //   }
+                                              // })}
+                                              // value={message.map((data) => {
+                                              //   return data.commentTxt;
+                                              // })}
+                                              id="id"
+                                              onChange={(e) => {
+                                                setInputCommentText(
+                                                  e.target.value
+                                                );
+                                                setCommentTxt(e.target.value);
+                                              }}
+                                              style={{
+                                                borderWidth: "thin",
+                                                borderRadius: "10px",
+                                              }}
+                                              rows="5"
+                                              cols="100"
+                                              placeholder="Enter your description"
+                                            ></textarea>
+                                          </div>
+                                        </div>
+                                        <div className="card-footer">
+                                          <button
+                                            onClick={handleClick}
+                                            style={{
+                                              marginBottom: "14px",
+                                              marginLeft: "364px",
+                                              marginTop: "28px",
+                                            }}
+                                            className="btn btn-success btn-lg"
+                                          >
+                                            Submit
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </form>
+                              </ModalBody>
+                            </Modal>
+                          </div>
+                        </span>
+                      </button>
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    {ImageContent ? (
+                      <img
+                        src={ImageContent}
+                        alt="Base64 Image"
+                        style={{ height: "236px", width: " 526px" }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div class="col-6">
+                    {base64Data ? (
+                      <video src={base64Data} controls>
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-7">
               {ImageContent ? (
                 <img
@@ -254,7 +445,7 @@ const Articleview = () => {
                 ""
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

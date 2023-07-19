@@ -31,7 +31,7 @@ const Addartcile = (props) => {
   const [videoFile, setVideoFile] = useState("");
 
   const [likes, setLikes] = useState(0);
-  const userId = sessionStorage.getItem("userId");
+  const articleCreatedBy = sessionStorage.getItem("userId");
   const handleFileChange = (event) => {
     setVideoFile(event.target.files[0]);
     console.log(event.target.files[0]);
@@ -56,10 +56,10 @@ const Addartcile = (props) => {
       id,
       title,
       description,
-      selected,
+      // selected,
       name,
       likes,
-      userId,
+      articleCreatedBy,
       imageContent,
       videoFile,
     };
@@ -185,6 +185,7 @@ const Addartcile = (props) => {
                     </label>
                     <input
                       type="file"
+                      multiple
                       style={{ paddingRight: "91px" }}
                       onChange={handleChange}
                     />

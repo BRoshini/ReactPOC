@@ -60,20 +60,6 @@ const Articlehomepage = () => {
     e.preventDefault();
     setModal(false);
     console.log("submitted value", commentTxts);
-
-    // useEffect(() => {
-    // fetch("http://localhost:8000/comments", {
-    //   method: "POST",
-    //   headers: { "content-type": "application/json" },
-    //   body: JSON.stringify(commentsObject),
-    // })
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // // }, [id]);
   };
 
   return (
@@ -160,7 +146,7 @@ const Articlehomepage = () => {
                           }}
                         ></i>
                       </span>
-                      {likes.filter((like) => like.article_id === x.id).length}
+                      {x.likes}
                       &nbsp;
                     </button>
                   </div>
@@ -242,14 +228,6 @@ const Articlehomepage = () => {
                                             </label>
                                             <textarea
                                               value={inputCommentText}
-                                              // value={message.map((item) => {
-                                              //   {
-                                              //     item.commentTxt;
-                                              //   }
-                                              // })}
-                                              // value={message.map((data) => {
-                                              //   return data.commentTxt;
-                                              // })}
                                               id="id"
                                               onChange={(e) => {
                                                 setInputCommentText(

@@ -10,18 +10,40 @@ const Addartcile = (props) => {
   const [selected, setSelected] = useState("");
   const [name, setName] = useState("");
   const [imageContent, setImageContent] = useState("");
+  // const handleChange = (event) => {
+  //   event.preventDefault();
+  //   setSelected(event.target.files[0]);
+  //   // setName(event.target.files.map((x) => x.name));
+  //   console.log(name);
+  //   const selectedFiles = event.target.files;
+
+  //   const fileNames = Array.from(selectedFiles).map((file) => file.name);
+
+  //   setName(fileNames);
+
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     const base64String = reader.result;
+  //     setImageContent(base64String);
+  //   };
+  //   reader.readAsDataURL(event.target.files[0]);
+  // };
   const handleChange = (event) => {
     event.preventDefault();
-    setSelected(event.target.files[0]);
-    setName(event.target.files[0].name);
-    console.log(event.target.files[0]);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result;
-      setImageContent(base64String);
-    };
-    reader.readAsDataURL(event.target.files[0]);
+    const selectedFiles = event.target.files;
+    const fileNames = Array.from(selectedFiles).map((file) => file.name);
+    setName(fileNames);
+    const base64Contents = [];
+    Array.from(selectedFiles).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        base64Contents.push(reader.result);
+        if (base64Contents.length === selectedFiles.length) {
+          setImageContent(base64Contents);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   };
 
   const [title, setTitle] = useState("");
@@ -31,7 +53,9 @@ const Addartcile = (props) => {
   const [videoFile, setVideoFile] = useState("");
 
   const [likes, setLikes] = useState(0);
-  const articleCreatedBy = sessionStorage.getItem("userId");
+  const [commentCount, setCommentCount] = useState(0);
+  const userId = sessionStorage.getItem("userId");
+  const articleCreatedBy = sessionStorage.getItem("userName");
   const handleFileChange = (event) => {
     setVideoFile(event.target.files[0]);
     console.log(event.target.files[0]);
@@ -56,12 +80,13 @@ const Addartcile = (props) => {
       id,
       title,
       description,
-      // selected,
       name,
       likes,
-      articleCreatedBy,
       imageContent,
       videoFile,
+      userId,
+      articleCreatedBy,
+      commentCount,
     };
     if (title && description) {
       fetch("http://localhost:8000/articlecreate", {
@@ -189,6 +214,9 @@ const Addartcile = (props) => {
                       style={{ paddingRight: "91px" }}
                       onChange={handleChange}
                     />
+                    {/* {name.map((fileName, index) => (
+                      <p key={index}>{fileName}</p>
+                    ))} */}
 
                     <br />
                     <div className="col-lg-12" style={{ marginTop: "24px" }}>

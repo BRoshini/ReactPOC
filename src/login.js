@@ -26,6 +26,7 @@ const Login = () => {
     );
     if (validUser) {
       sessionStorage.setItem("userId", validUser.id);
+      sessionStorage.setItem("userName", validUser.uname);
     }
     if (validUser) {
       navigate("/articlehomepage");

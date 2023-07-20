@@ -6,7 +6,6 @@ import { Modal, ModalHeader } from "reactstrap";
 
 const Articleview = () => {
   const params = useParams();
-  // const { userid } = useParams();
   const [data, setData] = useState("");
   const [message, setMessage] = useState("");
   const [item, setItem] = useState([]);
@@ -15,7 +14,8 @@ const Articleview = () => {
   const [base64Data, setBase64Data] = useState("");
   const [likes, setLikes] = useState(0);
   const userId = sessionStorage.getItem("userId");
-  // const [likesVal,setLikesVal] = useState
+  const [commentCount, setCommentCount] = useState("");
+
   useEffect(() => {
     axios
       .get(`http://localhost:8000/articlecreate/${params?.id}`)
@@ -23,7 +23,7 @@ const Articleview = () => {
         console.log(response.data);
         setData(response.data);
         setArticle_id(response.data.id);
-        //setCount(response.data.likes);
+        setLikes(response.data.likes);
         setImageContent(response.data.imageContent);
         setBase64Data(response.data.videoFile);
       })
@@ -33,8 +33,10 @@ const Articleview = () => {
   }, []);
 
   const incrementCount = () => {
-    setCount(1);
-    // console.log(data.likes + 1);
+    setLikes(1);
+    const payload = data;
+    payload["likes"] = 1;
+    axios.put(`http://localhost:8000/articlecreate/${params?.id}`, payload);
   };
 
   const [modal, setModal] = useState(false);
@@ -42,29 +44,26 @@ const Articleview = () => {
   const [inputCommentText, setInputCommentText] = useState("");
   const [id, setId] = useState(0);
   const [article_id, setArticle_id] = useState(0);
+  const [length, setLength] = useState("");
   let commentsObject = {
     commentTxt,
     article_id,
+    length,
     id,
-    likes,
-    count,
   };
+  console.log(inputCommentText);
   const handleClick = (e) => {
     e.preventDefault();
     setInputCommentText(" ");
     setModal(false);
-    fetch(`http://localhost:8000/comments?article_Id=${params.id}`, {
+    fetch(`http://localhost:8000/comments?article_id=${params.id}`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(commentsObject),
     })
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
       .then((data) => {
         console.log(data);
-        setInputCommentText(data.commentTxt);
+        setCommentTxt("");
         setCount(1);
       })
       .catch((err) => {
@@ -73,26 +72,33 @@ const Articleview = () => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/comments?article_Id=${params.id}`)
+      .get(`http://localhost:8000/comments?article_id=${params.id}`)
       .then((response) => {
+        const commentData = response.data;
+
+        const items = commentData.map((data) => {
+          return data.commentTxt;
+        });
+        const commentString = items.join(", ");
         console.log(response.data);
-        setMessage(response.data);
+        setMessage(response.data[0]);
+        setLikes(response.data[0].count);
+        setInputCommentText(commentString);
+        setLength(response.data.length);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/user/${userId}`)
-      .then((response) => {
-        console.log(response.data);
-        setItem(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  }, [commentTxt]);
+
+  //   const {commentCount} = data;
+  //  const counter = length;
+  // const payload = { ...data };
+  // console.log(data, payload);
+  // payload.commentCount = length;
+  // console.log(length);
+  // axios.put(`http://localhost:8000/comments?article_id=${params.id}`, payload);
+
   return (
     <div>
       <div class="container" style={{ marginTop: "38px" }}>
@@ -103,11 +109,6 @@ const Articleview = () => {
                 <h3>Title: &nbsp;</h3>
               </label>
               {data.title}
-
-              {/* <label style={{ fontWeight: "700" }}>
-                <h3>Title: &nbsp;</h3>
-              </label>
-              {data.title} */}
             </div>
             <div class="card-body">
               {/* <h5 class="card-title">
@@ -267,7 +268,7 @@ const Articleview = () => {
                           }}
                         ></i>
                       </span>
-                      &nbsp;{count}
+                      &nbsp;{likes}
                       {/* {message
                         ? message.filter(
                             (items) => items.article_id === data.id
@@ -275,28 +276,28 @@ const Articleview = () => {
                         : ""} */}
                     </button>
                   </div>
-                  <div class="col-10">
+                  <div class="col-10" style={{ textAlign: "justify" }}>
                     <label style={{ fontWeight: "700" }}>
                       <h3>Description: &nbsp;</h3>
                     </label>
                     {data.description}
                     <div className="row">
-                      {commentTxt ? (
+                      {inputCommentText ? (
                         <label style={{ fontWeight: "700" }}>
-                          <h3>Comment message: &nbsp; </h3>
-                          {commentTxt}
+                          <h3>Comment message: </h3>
+                          {inputCommentText}
                         </label>
                       ) : (
                         ""
                       )}
                     </div>
-                    <div className="row">
-                      <label style={{ fontWeight: "700" }}>
-                        <h3>Article created by: &nbsp;</h3>
-                        {item.uname}
-                      </label>
-                    </div>
+                    {/* <div className="row"> */}
+                    <label style={{ fontWeight: "700" }}>
+                      <h3>Article created by: &nbsp;</h3>
+                    </label>
+                    {data.articleCreatedBy}
                   </div>
+                  {/* </div> */}
                   <div class="col-1">
                     <label style={{ fontWeight: "700" }}>
                       <button
@@ -348,15 +349,7 @@ const Articleview = () => {
                                               <b>Comment Message: </b>
                                             </label>
                                             <textarea
-                                              value={inputCommentText}
-                                              // value={message.map((item) => {
-                                              //   {
-                                              //     item.commentTxt;
-                                              //   }
-                                              // })}
-                                              // value={message.map((data) => {
-                                              //   return data.commentTxt;
-                                              // })}
+                                              value={commentTxt}
                                               id="id"
                                               onChange={(e) => {
                                                 setInputCommentText(
@@ -401,15 +394,14 @@ const Articleview = () => {
                 </div>
                 <div class="row">
                   <div class="col-6">
-                    {ImageContent ? (
-                      <img
-                        src={ImageContent}
-                        alt="Base64 Image"
-                        style={{ height: "236px", width: " 526px" }}
-                      />
-                    ) : (
-                      ""
-                    )}
+                    {ImageContent && ImageContent.length > 0
+                      ? ImageContent.map((imageSrc) => (
+                          <img
+                            src={imageSrc}
+                            style={{ height: "236px", width: "526px" }}
+                          />
+                        ))
+                      : ""}
                   </div>
                   <div class="col-6">
                     {base64Data ? (
@@ -424,28 +416,6 @@ const Articleview = () => {
               </div>
             </div>
           </div>
-          {/* <div className="row">
-            <div className="col-lg-7">
-              {ImageContent ? (
-                <img
-                  src={ImageContent}
-                  alt="Base64 Image"
-                  style={{ height: "236px", width: " 526px" }}
-                />
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="col-lg-5">
-              {base64Data ? (
-                <video src={base64Data} controls>
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                ""
-              )}
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

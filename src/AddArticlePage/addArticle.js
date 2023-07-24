@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import "./addArticle.css";
 
 const Addartcile = (props) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("");
   const [name, setName] = useState("");
+  const [videoName, setVideoName] = useState("");
   const [imageContent, setImageContent] = useState("");
   // const handleChange = (event) => {
   //   event.preventDefault();
@@ -21,13 +23,6 @@ const Addartcile = (props) => {
 
   //   setName(fileNames);
 
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     const base64String = reader.result;
-  //     setImageContent(base64String);
-  //   };
-  //   reader.readAsDataURL(event.target.files[0]);
-  // };
   const handleChange = (event) => {
     event.preventDefault();
     const selectedFiles = event.target.files;
@@ -57,18 +52,33 @@ const Addartcile = (props) => {
   const userId = sessionStorage.getItem("userId");
   const articleCreatedBy = sessionStorage.getItem("userName");
   const handleFileChange = (event) => {
-    setVideoFile(event.target.files[0]);
-    console.log(event.target.files[0]);
-    const file = event.target.files[0];
-
-    if (file) {
+    event.preventDefault();
+    const selectedFiles = event.target.files;
+    const fileNames = Array.from(selectedFiles).map((file) => file.name);
+    setVideoName(fileNames);
+    const base64Contents = [];
+    Array.from(selectedFiles).forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result;
-        setVideoFile(base64String);
+        base64Contents.push(reader.result);
+        if (base64Contents.length === selectedFiles.length) {
+          setVideoFile(base64Contents);
+        }
       };
       reader.readAsDataURL(file);
-    }
+    });
+    // setVideoFile(event.target.files[0]);
+    // console.log(event.target.files[0]);
+    // const file = event.target.files[0];
+
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     const base64String = reader.result;
+    //     setVideoFile(base64String);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const handleSubmit = async (e) => {
@@ -87,6 +97,7 @@ const Addartcile = (props) => {
       userId,
       articleCreatedBy,
       commentCount,
+      videoName,
     };
     if (title && description) {
       fetch("http://localhost:8000/articlecreate", {
@@ -234,6 +245,7 @@ const Addartcile = (props) => {
                       <div>
                         <input
                           type="file"
+                          multiple
                           accept="video/*"
                           onChange={handleFileChange}
                           style={{ paddingRight: "91px" }}

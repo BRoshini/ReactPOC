@@ -1,13 +1,7 @@
 import { Link } from "react-router-dom";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const clickHandler = () => {
-    sessionStorage.removeItem("userId");
-    navigate("/login");
-  };
   return (
     <div>
       <nav>
@@ -53,7 +47,7 @@ const Home = () => {
             </li>
 
             <li style={{ flex: "1", textAlign: "end", paddingRight: "67px" }}>
-              {/* <Link
+              <Link
                 class="navbar-brand"
                 to="/login"
                 style={{ fontSize: "21px", marginTop: "19px", color: "white" }}
@@ -68,15 +62,7 @@ const Home = () => {
                     fontSize: "19px",
                   }}
                 ></i>
-              </Link> */}
-              <button
-                style={{ marginBottom: "14px" }}
-                className="btn btn-success btn-lg"
-                to={"/login"}
-                onClick={clickHandler}
-              >
-                Logout
-              </button>
+              </Link>
             </li>
           </ul>
         </div>

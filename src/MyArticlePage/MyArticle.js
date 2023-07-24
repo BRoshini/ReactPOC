@@ -79,22 +79,21 @@ const MyArticle = () => {
                     <div class="col-sm-9">
                       <div class="card" style={{ borderColor: "aliceblue" }}>
                         <div class="card-body">
-                          <h2 class="card-title" style={{ color: "deeppink" }}>
+                          <label style={{ fontWeight: "700" }}>
+                            <h3 style={{ color: "deeppink" }}>Title: &nbsp;</h3>
+                          </label>
+                          <h7 style={{ fontSize: "21px", color: "deeppink" }}>
                             {x.title}
-                          </h2>
-                          <p class="card-text" style={{ color: "deeppink" }}>
+                          </h7>{" "}
+                          <br />
+                          <label style={{ fontWeight: "700" }}>
+                            <h3 style={{ color: "deeppink" }}>
+                              Description: &nbsp;
+                            </h3>
+                          </label>
+                          <h7 style={{ fontSize: "21px", color: "deeppink" }}>
                             {x.description}
-                          </p>
-                          {/* <div>
-                            {commentTxt.map((item) => {
-                              <p
-                                class="card-text"
-                                style={{ color: "deeppink" }}
-                              >
-                                {item.commentTxt}
-                              </p>;
-                            })}
-                          </div> */}
+                          </h7>{" "}
                         </div>
                       </div>
                     </div>

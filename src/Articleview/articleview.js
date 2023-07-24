@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, ModalBody, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Modal, ModalHeader } from "reactstrap";
+//import "./articleview.css";
 
 const Articleview = () => {
   const params = useParams();
@@ -14,26 +15,58 @@ const Articleview = () => {
   const [base64Data, setBase64Data] = useState("");
   const [likes, setLikes] = useState(0);
   const userId = sessionStorage.getItem("userId");
-  const [commentCount, setCommentCount] = useState("");
+  const [likesCount, setLikesCount] = useState("");
 
   useEffect(() => {
+    articleCreate();
+    commentsCreate();
+  }, []);
+  const articleCreate = () => {
+    setTimeout(() => {
+      axios
+        .get(`http://localhost:8000/articlecreate/${params?.id}`)
+        .then((response) => {
+          console.log(response.data);
+          setData(response.data);
+          setArticle_id(response.data.id);
+          setLikes(response.data.likes);
+          setLikesCount(response.data.likes);
+          console.log(response.data.likes);
+          setImageContent(response.data.imageContent);
+          setBase64Data(response.data.videoFile);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, 500);
+  };
+
+  const commentsCreate = () => {
+    let sample;
     axios
-      .get(`http://localhost:8000/articlecreate/${params?.id}`)
+      .get(`http://localhost:8000/comments?article_id=${params.id}`)
       .then((response) => {
+        const commentData = response.data;
+        console.log("comment article");
+        const items = commentData.map((data) => {
+          return data.commentTxt;
+        });
+        const commentString = items.join(", ");
         console.log(response.data);
-        setData(response.data);
-        setArticle_id(response.data.id);
-        setLikes(response.data.likes);
-        setImageContent(response.data.imageContent);
-        setBase64Data(response.data.videoFile);
+        setMessage(response.data[0]);
+        setLikes(response.data[0].count);
+        setInputCommentText(commentString);
+        setLength(response.data.length);
+        sample = response.data.length;
       })
+
       .catch((error) => {
         console.error(error);
       });
-  }, []);
-
+  };
   const incrementCount = () => {
     setLikes(1);
+    setLikesCount(1);
     const payload = data;
     payload["likes"] = 1;
     axios.put(`http://localhost:8000/articlecreate/${params?.id}`, payload);
@@ -54,7 +87,7 @@ const Articleview = () => {
   console.log(inputCommentText);
   const handleClick = (e) => {
     e.preventDefault();
-    setInputCommentText(" ");
+    //setInputCommentText(" ");
     setModal(false);
     fetch(`http://localhost:8000/comments?article_id=${params.id}`, {
       method: "POST",
@@ -66,39 +99,48 @@ const Articleview = () => {
         setCommentTxt("");
         setCount(1);
       })
+
       .catch((err) => {
         console.log(err);
       });
-  };
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/comments?article_id=${params.id}`)
-      .then((response) => {
-        const commentData = response.data;
 
-        const items = commentData.map((data) => {
-          return data.commentTxt;
+    let sample;
+    setTimeout(() => {
+      axios
+        .get(`http://localhost:8000/comments?article_id=${params.id}`)
+        .then((response) => {
+          const commentData = response.data;
+          console.log("comment article");
+          const items = commentData.map((data) => {
+            return data.commentTxt;
+          });
+          const commentString = items.join(", ");
+          console.log(response.data);
+          setMessage(response.data[0]);
+          setLikes(response.data[0].count);
+          setInputCommentText(commentString);
+          setLength(response.data.length);
+
+          console.log(response.data.likes);
+          sample = response.data.length;
+        })
+
+        .catch((error) => {
+          console.error(error);
         });
-        const commentString = items.join(", ");
-        console.log(response.data);
-        setMessage(response.data[0]);
-        setLikes(response.data[0].count);
-        setInputCommentText(commentString);
-        setLength(response.data.length);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [commentTxt]);
+    }, 1000);
 
-  //   const {commentCount} = data;
-  //  const counter = length;
-  // const payload = { ...data };
-  // console.log(data, payload);
-  // payload.commentCount = length;
-  // console.log(length);
-  // axios.put(`http://localhost:8000/comments?article_id=${params.id}`, payload);
-
+    setTimeout(() => {
+      const payload = { ...data };
+      console.log(data);
+      console.log(payload);
+      payload.commentCount = sample;
+      console.log(sample);
+      axios.put(`http://localhost:8000/articlecreate/${params?.id}`, payload);
+    }, 3000);
+  };
+  console.log(likes);
+  console.log(likesCount);
   return (
     <div>
       <div class="container" style={{ marginTop: "38px" }}>
@@ -108,145 +150,12 @@ const Articleview = () => {
               <label style={{ fontWeight: "700" }}>
                 <h3>Title: &nbsp;</h3>
               </label>
-              {data.title}
+              <h7 style={{ fontSize: "21px" }}>{data.title}</h7>
             </div>
             <div class="card-body">
-              {/* <h5 class="card-title">
-                <button
-                  onClick={incrementCount}
-                  style={{
-                    paddingLeft: "38px",
-                    marginTop: "15px",
-                    paddingRight: "11px",
-                    backgroundColor: "deepskyblue",
-                    float: "left",
-                    marginTop: "2px",
-                  }}
-                >
-                  <span style={{ fontSize: "2rem", color: "floralwhite" }}>
-                    <i
-                      class="fas fa-thumbs-up"
-                      style={{
-                        paddingRight: "3px",
-                        display: "contents",
-                        color: "white;",
-                      }}
-                    ></i>
-                  </span>
-                  &nbsp;{count}
-                </button>
-                <div className="col-lg-11">
-                  {" "}
-                  <h3>Description:</h3>
-                  {data.description}
-                </div>
-
-                <div>
-                  <button
-                    onClick={() => setModal(true)}
-                    style={{
-                      paddingLeft: "38px",
-                      // marginTop: "15px",
-                      paddingRight: "11px",
-                      backgroundColor: "deepskyblue",
-                      float: "right",
-                      marginTop: "2px",
-                    }}
-                  >
-                    <span style={{ fontSize: "2rem", color: "floralwhite" }}>
-                      <i
-                        class="fas fa-comment-alt"
-                        style={{
-                          paddingRight: "3px",
-                          display: "contents",
-                          color: "white;",
-                        }}
-                      ></i>
-
-                      <div>
-                        <Modal
-                          size="lg"
-                          isOpen={modal}
-                          toggle={() => setModal(!modal)}
-                        >
-                          <ModalHeader toggle={() => setModal(!modal)}>
-                            Comment Message for Article
-                          </ModalHeader>
-                          <ModalBody>
-                            <form>
-                              <Row>
-                                <Col lg={12}>
-                                  <div className="row">
-                                    <div className="col-lg-12">
-                                      <div className="form-group">
-                                        <label
-                                          style={{
-                                            display: "flex",
-                                            fontSize: "27px",
-                                            color: "blue",
-                                          }}
-                                        >
-                                          <b>Comment Message: </b>
-                                        </label>
-                                        <textarea
-                                          value={inputCommentText}
-                                          // value={message.map((item) => {
-                                          //   {
-                                          //     item.commentTxt;
-                                          //   }
-                                          // })}
-                                          // value={message.map((data) => {
-                                          //   return data.commentTxt;
-                                          // })}
-                                          id="id"
-                                          onChange={(e) => {
-                                            setInputCommentText(e.target.value);
-                                            setCommentTxt(e.target.value);
-                                          }}
-                                          style={{
-                                            borderWidth: "thin",
-                                            borderRadius: "10px",
-                                          }}
-                                          rows="5"
-                                          cols="100"
-                                          placeholder="Enter your description"
-                                        ></textarea>
-                                      </div>
-                                    </div>
-                                    <div className="card-footer">
-                                      <button
-                                        onClick={handleClick}
-                                        style={{
-                                          marginBottom: "14px",
-                                          marginLeft: "364px",
-                                          marginTop: "28px",
-                                        }}
-                                        className="btn btn-success btn-lg"
-                                      >
-                                        Submit
-                                      </button>
-                                    </div>
-                                  </div>
-                                </Col>
-                              </Row>
-                            </form>
-                          </ModalBody>
-                        </Modal>
-                      </div>
-                    </span>
-                  </button>
-                </div>
-              </h5>
-              <p class="card-text">{commentTxt}</p>
-              <div className="row">
-                <p class="card-text" style={{ paddingRight: "2px" }}>
-                  &nbsp; Article created by :&nbsp;{item.uname}
-                </p>
-              </div> */}
-
-              <div class="conatiner-fluid p-0">
+              <div class="container-fluid p-0">
                 <div class="row">
-                  <div class="col-1" style={{ color: "white" }}>
+                  <div class="col-1">
                     <button
                       onClick={incrementCount}
                       style={{
@@ -268,36 +177,38 @@ const Articleview = () => {
                           }}
                         ></i>
                       </span>
-                      &nbsp;{likes}
-                      {/* {message
-                        ? message.filter(
-                            (items) => items.article_id === data.id
-                          ).length
-                        : ""} */}
+                      &nbsp;
+                      {likesCount}
                     </button>
                   </div>
                   <div class="col-10" style={{ textAlign: "justify" }}>
                     <label style={{ fontWeight: "700" }}>
-                      <h3>Description: &nbsp;</h3>
+                      <h3>Description:&nbsp; </h3>
                     </label>
-                    {data.description}
+                    <h7 style={{ fontSize: "21px" }}>{data.description}</h7>
                     <div className="row">
                       {inputCommentText ? (
                         <label style={{ fontWeight: "700" }}>
-                          <h3>Comment message: </h3>
-                          {inputCommentText}
+                          <h3>
+                            Comment message:&nbsp;
+                            <h8 style={{ fontSize: "21px" }}>
+                              {inputCommentText}
+                            </h8>{" "}
+                          </h3>
                         </label>
                       ) : (
                         ""
                       )}
                     </div>
-                    {/* <div className="row"> */}
                     <label style={{ fontWeight: "700" }}>
                       <h3>Article created by: &nbsp;</h3>
                     </label>
-                    {data.articleCreatedBy}
+                    <h7 style={{ fontSize: "21px" }}>
+                      {" "}
+                      {data.articleCreatedBy}
+                    </h7>
                   </div>
-                  {/* </div> */}
+
                   <div class="col-1">
                     <label style={{ fontWeight: "700" }}>
                       <button
@@ -393,7 +304,7 @@ const Articleview = () => {
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-12">
                     {ImageContent && ImageContent.length > 0
                       ? ImageContent.map((imageSrc) => (
                           <img
@@ -403,7 +314,10 @@ const Articleview = () => {
                         ))
                       : ""}
                   </div>
-                  <div class="col-6">
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-12">
                     {base64Data ? (
                       <video src={base64Data} controls>
                         Your browser does not support the video tag.

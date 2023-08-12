@@ -16,6 +16,7 @@ const Articleview = () => {
   const [likes, setLikes] = useState(0);
   const userId = sessionStorage.getItem("userId");
   const [likesCount, setLikesCount] = useState("");
+  const articleCreatedBy = sessionStorage.getItem("userName");
 
   useEffect(() => {
     articleCreate();
@@ -68,7 +69,15 @@ const Articleview = () => {
     setLikes(1);
     setLikesCount(1);
     const payload = data;
+
     payload["likes"] = 1;
+    if (data.articleCreatedBy === articleCreatedBy) {
+      payload["likes"] = 1;
+      setLikesCount(1);
+    } else {
+      payload["likes"] = 2;
+      setLikesCount(2);
+    }
     axios.put(`http://localhost:8000/articlecreate/${params?.id}`, payload);
   };
 
@@ -87,7 +96,6 @@ const Articleview = () => {
   console.log(inputCommentText);
   const handleClick = (e) => {
     e.preventDefault();
-    //setInputCommentText(" ");
     setModal(false);
     fetch(`http://localhost:8000/comments?article_id=${params.id}`, {
       method: "POST",
@@ -115,13 +123,10 @@ const Articleview = () => {
             return data.commentTxt;
           });
           const commentString = items.join(", ");
-          console.log(response.data);
           setMessage(response.data[0]);
           setLikes(response.data[0].count);
           setInputCommentText(commentString);
           setLength(response.data.length);
-
-          console.log(response.data.likes);
           sample = response.data.length;
         })
 
@@ -132,30 +137,25 @@ const Articleview = () => {
 
     setTimeout(() => {
       const payload = { ...data };
-      console.log(data);
-      console.log(payload);
       payload.commentCount = sample;
-      console.log(sample);
       axios.put(`http://localhost:8000/articlecreate/${params?.id}`, payload);
     }, 3000);
   };
-  console.log(likes);
-  console.log(likesCount);
   return (
     <div>
-      <div class="container" style={{ marginTop: "38px" }}>
-        <div class="card text-white bg-primary mb-3">
-          <div class="col-lg-12">
-            <div class="card-header">
+      <div className="container" style={{ marginTop: "38px" }}>
+        <div className="card text-white bg-primary mb-3">
+          <div className="col-lg-12">
+            <div className="card-header">
               <label style={{ fontWeight: "700" }}>
                 <h3>Title: &nbsp;</h3>
               </label>
               <h7 style={{ fontSize: "21px" }}>{data.title}</h7>
             </div>
-            <div class="card-body">
-              <div class="container-fluid p-0">
-                <div class="row">
-                  <div class="col-1">
+            <div className="card-body">
+              <div className="container-fluid p-0">
+                <div className="row">
+                  <div className="col-1">
                     <button
                       onClick={incrementCount}
                       style={{
@@ -169,11 +169,11 @@ const Articleview = () => {
                     >
                       <span style={{ fontSize: "2rem", color: "floralwhite" }}>
                         <i
-                          class="fas fa-thumbs-up"
+                          className="fas fa-thumbs-up"
                           style={{
                             paddingRight: "3px",
                             display: "contents",
-                            color: "white;",
+                            color: "white",
                           }}
                         ></i>
                       </span>
@@ -181,7 +181,7 @@ const Articleview = () => {
                       {likesCount}
                     </button>
                   </div>
-                  <div class="col-10" style={{ textAlign: "justify" }}>
+                  <div className="col-10" style={{ textAlign: "justify" }}>
                     <label style={{ fontWeight: "700" }}>
                       <h3>Description:&nbsp; </h3>
                     </label>
@@ -209,13 +209,12 @@ const Articleview = () => {
                     </h7>
                   </div>
 
-                  <div class="col-1">
+                  <div className="col-1">
                     <label style={{ fontWeight: "700" }}>
                       <button
                         onClick={() => setModal(true)}
                         style={{
                           paddingLeft: "38px",
-                          // marginTop: "15px",
                           paddingRight: "11px",
                           backgroundColor: "deepskyblue",
                           float: "right",
@@ -226,11 +225,11 @@ const Articleview = () => {
                           style={{ fontSize: "2rem", color: "floralwhite" }}
                         >
                           <i
-                            class="fas fa-comment-alt"
+                            className="fas fa-comment-alt"
                             style={{
                               paddingRight: "3px",
                               display: "contents",
-                              color: "white;",
+                              color: "white",
                             }}
                           ></i>
 
@@ -303,23 +302,31 @@ const Articleview = () => {
                     </label>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-12">
+                <div className="row">
+                  <div className="col-12">
                     {ImageContent && ImageContent.length > 0
                       ? ImageContent.map((imageSrc) => (
                           <img
                             src={imageSrc}
-                            style={{ height: "236px", width: "526px" }}
+                            style={{
+                              height: "291px",
+                              paddingRight: "13px",
+                              float: "left",
+                            }}
                           />
                         ))
                       : ""}
                   </div>
                 </div>
                 <br />
-                <div class="row">
-                  <div class="col-12">
+                <div className="row">
+                  <div className="col-12">
                     {base64Data ? (
-                      <video src={base64Data} controls>
+                      <video
+                        src={base64Data}
+                        style={{ width: "34%", float: "left" }}
+                        controls
+                      >
                         Your browser does not support the video tag.
                       </video>
                     ) : (

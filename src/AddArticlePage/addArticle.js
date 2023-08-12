@@ -8,20 +8,9 @@ import "./addArticle.css";
 
 const Addartcile = (props) => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState("");
   const [name, setName] = useState("");
   const [videoName, setVideoName] = useState("");
   const [imageContent, setImageContent] = useState("");
-  // const handleChange = (event) => {
-  //   event.preventDefault();
-  //   setSelected(event.target.files[0]);
-  //   // setName(event.target.files.map((x) => x.name));
-  //   console.log(name);
-  //   const selectedFiles = event.target.files;
-
-  //   const fileNames = Array.from(selectedFiles).map((file) => file.name);
-
-  //   setName(fileNames);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -46,7 +35,6 @@ const Addartcile = (props) => {
   const [description, setDescription] = useState("");
   const [id, setId] = useState(0);
   const [videoFile, setVideoFile] = useState("");
-
   const [likes, setLikes] = useState(0);
   const [commentCount, setCommentCount] = useState(0);
   const userId = sessionStorage.getItem("userId");
@@ -67,18 +55,6 @@ const Addartcile = (props) => {
       };
       reader.readAsDataURL(file);
     });
-    // setVideoFile(event.target.files[0]);
-    // console.log(event.target.files[0]);
-    // const file = event.target.files[0];
-
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {
-    //     const base64String = reader.result;
-    //     setVideoFile(base64String);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
   };
 
   const handleSubmit = async (e) => {
@@ -121,7 +97,7 @@ const Addartcile = (props) => {
   return (
     <div>
       <div
-        class="container"
+        className="container"
         style={{
           backgroundColor: " beige",
           marginTop: "81px",
@@ -153,7 +129,6 @@ const Addartcile = (props) => {
                       style={{
                         borderWidth: "thin",
                         borderColor: "black",
-                        // border: error.title ? "1px solid red" : null,
                       }}
                       className="form-control"
                       value={title}
@@ -225,10 +200,6 @@ const Addartcile = (props) => {
                       style={{ paddingRight: "91px" }}
                       onChange={handleChange}
                     />
-                    {/* {name.map((fileName, index) => (
-                      <p key={index}>{fileName}</p>
-                    ))} */}
-
                     <br />
                     <div className="col-lg-12" style={{ marginTop: "24px" }}>
                       <label

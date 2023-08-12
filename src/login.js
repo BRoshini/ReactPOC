@@ -64,11 +64,11 @@ const Login = () => {
               <h2 style={{ color: "chocolate" }}>
                 <span style={{ fontSize: "2rem", paddingRight: "5px" }}>
                   <i
-                    class="fas fa-user-circle"
+                    className="fas fa-user-circle"
                     style={{
                       paddingRight: "3px",
                       display: "contents",
-                      color: "white;",
+                      color: "chocolate",
                     }}
                   ></i>
                 </span>

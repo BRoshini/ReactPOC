@@ -27,13 +27,23 @@
     float: "left";
     margin-top: "2px";
 }
-.myclass{
-    font-size: "2rem"!important;
-    color: "floralwhite"!important;
-    padding-right: "2px"!important;
+.modal{
+    padding-left: "38px";
+      padding-right:  "11px";
+      background-color: "deepskyblue";
+      float: "right";
+       margin-top: "2px",
 }
-.button{
+.button {
     padding-right: "3px";
-       display: "contents";
-      color: "white";
+     display: "contents";
+    color: "white";
 }
+
+.myclass {
+    font-size: "2rem";
+    color: "floralwhite";
+    padding-right: "2px";
+    z-index: 10;
+}
+

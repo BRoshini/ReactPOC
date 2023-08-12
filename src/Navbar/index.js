@@ -10,7 +10,7 @@ const Home = () => {
             <li>
               <Link
                 style={{ fontSize: "21px", marginTop: "19px", color: "white" }}
-                class="navbar-brand"
+                className="navbar-brand"
                 to="/articlehomepage"
               >
                 Home
@@ -25,7 +25,7 @@ const Home = () => {
                   marginTop: "19px",
                   color: "white",
                 }}
-                class="navbar-brand"
+                className="navbar-brand"
                 to="/addarticle"
               >
                 Add Article
@@ -39,7 +39,7 @@ const Home = () => {
                   marginTop: "19px",
                   color: "white",
                 }}
-                class="navbar-brand"
+                className="navbar-brand"
                 to="/myarticle"
               >
                 My articles
@@ -48,17 +48,17 @@ const Home = () => {
 
             <li style={{ flex: "1", textAlign: "end", paddingRight: "67px" }}>
               <Link
-                class="navbar-brand"
+                className="navbar-brand"
                 to="/login"
                 style={{ fontSize: "21px", marginTop: "19px", color: "white" }}
               >
                 Logout
                 <i
-                  class="fas fa-power-off"
+                  className="fas fa-power-off"
                   style={{
                     paddingLeft: "9px",
 
-                    color: "white;",
+                    color: "white",
                     fontSize: "19px",
                   }}
                 ></i>

@@ -30,7 +30,7 @@ const Addartcile = (props) => {
     });
   };
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(""); 
   const [error, setError] = useState("");
   const [description, setDescription] = useState("");
   const [id, setId] = useState(0);
@@ -43,6 +43,7 @@ const Addartcile = (props) => {
     event.preventDefault();
     const selectedFiles = event.target.files;
     const fileNames = Array.from(selectedFiles).map((file) => file.name);
+    console.log(selectedFiles);
     setVideoName(fileNames);
     const base64Contents = [];
     Array.from(selectedFiles).forEach((file) => {

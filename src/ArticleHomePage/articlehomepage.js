@@ -42,6 +42,7 @@ const Articlehomepage = ({ myArticles }) => {
       .then((response) => {
         console.log(response.data);
         setArticleData(response.data);
+        console.log(setArticleData);
       })
       .catch((error) => {
         console.error(error);
